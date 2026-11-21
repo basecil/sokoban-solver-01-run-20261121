@@ -29,8 +29,8 @@ return R2};
 const J2=J();
 let pl=p,M='',v;
 for(const r of J2){const A2=a.slice();
-for(const q of J2)for(const x of q==r?[]:q.B)A2[x]=1;
+for(const q of J2)if(q!==r)for(const x of q.B)A2[x]=1;
 if(!(v=V(A2,r.G,r.B,pl)))return'';
-M+=v.M;pl=v.P}
+M+=v.M;pl=v.P;r.B=r.G}
 return M};
 for(const d of f.readdirSync(I)){f.mkdirSync(O+'/'+d);f.writeFileSync(O+'/'+d+'/solution.txt',S(f.readFileSync(I+'/'+d+'/level.txt')+''))}
