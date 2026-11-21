@@ -1,14 +1,14 @@
-import*as f from'node:fs';
+import f from'node:fs'
 const{MAKEFUN_INPUT_DIR:I='/input',MAKEFUN_OUTPUT_DIR:O='/output'}=process.env;
 const S=t=>{
-const r=t.split('\n'),w=r[0].length,a=Array(w*r.length).fill(1),g=[],b=[];let p=0,i=0;
-for(const y of r)for(const c of y){a[i]=c=='#';if('.*+'.includes(c))g.push(i);if('$*'.includes(c))b.push(i);if('@+'.includes(c))p=i;i++}
+const w=t.indexOf('\n'),a=[],g=[],b=[];let p=0,i=0
+for(const c of t){if(c=='\n')continue;a[i]=c=='#';c>='*'&&c<'@'&&g.push(i);(c=='$'|c=='*')&&b.push(i);(c=='@'|c=='+')&&(p=i);i++}
 const E=[-w,w,-1,1],K='udlr',o=[],z=[],m=[],v=[],H=[],c=(b,v)=>b.forEach(x=>o[x]=v);
 let T=0;
 const B3=(A,f,Y)=>{let u=f;const q=[f];Y[f]=++T;for(const x of q){if(x<u)u=x;for(let k=0;k<4;k++){const y=x+E[k];if(A[y]||o[y]||Y[y]==T)continue;Y[y]=T;v[y]=x;H[y]=K[k];q.push(y)}}return u};
 const V=(A,G,B,P)=>{const u=new Set(G),Y=x=>x.every(v=>u.has(v));
 const Q=[B],y=[P],N=[-1],D2=[0],X=new Map();c(B,1);X.set(B+'|'+B3(A,P,z),0);c(B,0);
-let f=Y(B)?0:-1;
+let f=-1;
 for(let e=0;f<0&&e<Q.length;e++){const b=Q[e];c(b,1);B3(A,y[e],z);const H=T;
 for(let j=0;j<b.length&&f<0;j++){const x=b[j];
 for(let k=0;k<4;k++){const d=E[k],t=x+d;if(z[x-d]!=H||A[t]||o[t])continue;
@@ -40,4 +40,4 @@ const v=V(A2,r.G,r.B,pl);
 if(!v)return'';
 M+=v.M;pl=v.P;r.D=1}
 return M};
-for(const d of f.readdirSync(I)){f.mkdirSync(`${O}/${d}`,{recursive:true});f.writeFileSync(`${O}/${d}/solution.txt`,S(f.readFileSync(`${I}/${d}/level.txt`,'utf8'))+'\n')}
+for(const d of f.readdirSync(I)){f.mkdirSync(O+'/'+d);f.writeFileSync(O+'/'+d+'/solution.txt',S(f.readFileSync(I+'/'+d+'/level.txt')+''))}
