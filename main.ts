@@ -5,7 +5,7 @@ const w=t.indexOf('\n'),a=[],g=[],b=[];let p=0,i=0
 for(const c of t)c!='\n'&&(a[i]=c=='#',c>='*'&&c<'@'&&g.push(i),(c=='$'|c=='*')&&b.push(i),(c=='@'|c=='+')&&(p=i),i++)
 const E=[-w,w,-1,1],K='udlr',z=[],m=[],H=[]
 let T=0
-const B3=(A,f,Y,B)=>{for(const x of B)A[x]=1;let u=f;const q=[f];Y[f]=++T;for(const x of q){u=x<u?x:u;for(let k=4;k--;){const y=x+E[k];A[y]|Y[y]==T||(Y[y]=T,H[y]=k,q.push(y))}}for(const x of B)A[x]=0;return u}
+const B3=(A,f,Y,B)=>{let u=f;const q=[f];Y[f]=++T;for(const x of q){u=x<u?x:u;for(let k=4;k--;){const y=x+E[k];A[y]|Y[y]==T|B.includes(y)||(Y[y]=T,H[y]=k,q.push(y))}}return u}
 const V=(A,G,B,P)=>{const Y=x=>x==G+''
 const Q=[B],y=[P],N=[0],X={};X[B+K+B3(A,P,z,B)]=1
 let f=-1
