@@ -20,18 +20,17 @@ for(;e>0;){const n=N[e],k=n%4,p=n/4|0,q=Q[p],w2=y[p],u2=y[e];let s='';
 B3(A,w2,m,q);for(let x=u2-E[k];x!=w2;x-=E[H[x]])s=K[H[x]]+s;
 M=s+K[k]+M;e=p}
 return{M,P:y[f]}};
-const J=()=>{const q=p/w|0,R2=[],U=new Set();
-for(const x of b){if(U.has(x))continue;const s=x<q*w?-1:1,V2=new Set([x]),S2=[x];
-for(const z2 of S2)for(const e of E){const y=z2+e;if(!a[y]&&!V2.has(y)&&((y/w|0)-q)*s>0){V2.add(y);S2.push(y)}}
-const B2=b.filter(v=>V2.has(v)&&U.add(v));
-R2.push({B:B2,G:g.filter(v=>V2.has(v))})}
+const J=()=>{const q=p/w|0,R2=[],U=[];
+for(const x of b){if(U.includes(x))continue;const s=x<q*w?-1:1,S2=[x];
+for(const z2 of S2)for(const e of E){const y=z2+e;if(!a[y]&&!S2.includes(y)&&((y/w|0)-q)*s>0)S2.push(y)}
+const B2=b.filter(v=>S2.includes(v)&&U.push(v));
+R2.push({B:B2,G:g.filter(v=>S2.includes(v))})}
 return R2};
 const J2=J();
-let pl=p,M='';
+let pl=p,M='',v;
 for(const r of J2){const A2=a.slice();
-for(const q of J2)if(q!==r)for(const x of q.D?q.G:q.B)A2[x]=1;
-const v=V(A2,r.G,r.B,pl);
-if(!v)return'';
-M+=v.M;pl=v.P;r.D=1}
+for(const q of J2)for(const x of q==r?[]:q.B)A2[x]=1;
+if(!(v=V(A2,r.G,r.B,pl)))return'';
+M+=v.M;pl=v.P}
 return M};
 for(const d of f.readdirSync(I)){f.mkdirSync(O+'/'+d);f.writeFileSync(O+'/'+d+'/solution.txt',S(f.readFileSync(I+'/'+d+'/level.txt')+''))}
