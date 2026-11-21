@@ -20,12 +20,10 @@ for(;e>0;){const n=N[e],k=n%4,p=n/4|0,q=Q[p],w2=y[p],u2=y[e];let s='';
 B3(A,w2,m,q);for(let x=u2-E[k];x!=w2;x-=E[H[x]])s=K[H[x]]+s;
 M=s+K[k]+M;e=p}
 return{M,P:y[f]}};
-const J=()=>{const q=p/w|0,R2=[],U=[];
-for(const x of b){if(U.includes(x))continue;const s=x<q*w?-1:1,S2=[x];
-for(const z2 of S2)for(const e of E){const y=z2+e;if(!a[y]&&!S2.includes(y)&&((y/w|0)-q)*s>0)S2.push(y)}
-const B2=b.filter(v=>S2.includes(v)&&U.push(v));
-R2.push({B:B2,G:g.filter(v=>S2.includes(v))})}
-return R2};
+const J=()=>{const R2=[],q=p/w|0,K2=x=>((x/w|0)<q?0:2)+((x%w-1)/7|0);
+for(const x of b){const k=K2(x);(R2[k]=R2[k]||{B:[],G:[]}).B.push(x)}
+for(const x of g){const k=K2(x);(R2[k]=R2[k]||{B:[],G:[]}).G.push(x)}
+return R2.filter(Boolean)};
 const J2=J();
 let pl=p,M='',v;
 for(const r of J2){const A2=a.slice();
