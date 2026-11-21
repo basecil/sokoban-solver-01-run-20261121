@@ -17,4 +17,4 @@ if(n==G+''){pl=y;G.map(x=>t[x]=35);return q}
 Q[C>c?T++:--h]=[n,y,q,C]}}}
 return''}
 for(let k=0;k<4;k++)M+=V(k)
-f.mkdirSync(O+p);f.writeFileSync(O+p+'solution.txt',M)}
+f.mkdirSync(O+p,{recursive:!0});f.writeFileSync(O+p+'solution.txt',M)}
