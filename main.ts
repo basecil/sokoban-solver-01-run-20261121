@@ -1,32 +1,29 @@
 import f from'node:fs'
 const{MAKEFUN_INPUT_DIR:I='/input',MAKEFUN_OUTPUT_DIR:O='/output'}=process.env
-const S=t=>{
-const w=t.indexOf('\n'),a=[],g=[],b=[];let p=0,i=0
-for(const c of t)c!='\n'&&(a[i]=c=='#',c>='*'&&c<'@'&&g.push(i),(c=='$'|c=='*')&&b.push(i),(c=='@'|c=='+')&&(p=i),i++)
-const E=[-w,w,-1,1],K='udlr',z=[],m=[],H=[]
-let T=0
-const B3=(A,f,Y,B)=>{let u=f;const q=[f];Y[f]=++T;for(const x of q){u=x<u?x:u;for(let k=4;k--;){const y=x+E[k];A[y]|Y[y]==T|B.includes(y)||(Y[y]=T,H[y]=k,q.push(y))}}return u}
-const V=(A,G,B,P)=>{const Y=x=>x==G+''
-const Q=[B],y=[P],N=[0],X={};X[B+K+B3(A,P,z,B)]=1
-let f=-1
-for(let e=0;f<0&&e<Q.length&&Q.length<25e4;e++){const b=Q[e];B3(A,y[e],z,b);const H=T;
-for(let j=b.length;j--&&f<0;){const x=b[j];
-for(let k=4;k--;){const t=x+E[k];if(z[2*x-t]!=H|A[t]|b.includes(t))continue;
-const N2=[...b];N2[j]=t;N2.sort((q,v)=>q-v);const K2=N2+K+B3(A,x,m,N2)
-X[K2]||(X[K2]=1,Q.push(N2),y.push(x),N.push(e*4+k),Y(N2)&&(f=Q.length-1))}}}
-if(f<0)return null
-let M='',e=f
-for(;e>0;){const n=N[e],k=n&3,p=n>>2,q=Q[p],w2=y[p],u2=y[e];let s='';
-B3(A,w2,m,q);for(let x=u2-E[k];x!=w2;x-=E[H[x]])s=K[H[x]]+s;
-M=s+K[k]+M;e=p}
-return{M,P:y[f]}}
-let J2=[],q=p/w|0,K2=x=>(x<q*w?0:2)+(x%w/7|0)
-for(const [A,L]of[[b,'B'],[g,'G']])for(const x of A)(J2[K2(x)]??={B:[],G:[]})[L].push(x)
-J2=J2.filter(Boolean)
-let pl=p,M='',v
-for(const r of J2){const A2=[...a]
-for(const q of J2)q!==r&&q.B.forEach(x=>A2[x]=1)
-if(!(v=V(A2,r.G,r.B,pl)))return''
-M+=v.M;pl=v.P;r.B=r.G}
-return M}
-for(const d of f.readdirSync(I)){f.mkdirSync(O+'/'+d,{recursive:true});f.writeFileSync(O+'/'+d+'/solution.txt',S(f.readFileSync(I+'/'+d+'/level.txt')+''))}
+for(const d of f.readdirSync(I)){let t=f.readFileSync(I+'/'+d+'/level.txt')+''
+const w=t.search(/\n/)
+t=t.replace(/\n/g,'')
+const E=[-w,w,-1,1],K='udlr',A=[],B=[],G=[],H=[]
+let pl=t.search(/@/),M=''
+const B3=(f,X)=>{let u=f,R=new Set([f]);for(const x of R)for(let k=4;k--;){const y=x+E[k];A[y]|R.has(y)|X.includes(y)||(R.add(y),H[y]=k,y<u&&(u=y))}return[u,R]}
+const V=(G,B)=>{
+const Q=[B],y=[pl],N=[0],X={}
+let F=0
+for(let e=0;e<Q.length&&!F&&e<2e5;e++){const b=Q[e],R=B3(y[e],b)[1]
+for(let j=4;j--;)for(let k=4;k--;){const s=b[j]+E[k]
+if(!R.has(2*b[j]-s)|A[s]|b.includes(s))continue
+const n=[...b];n[j]=s;n.sort((a,c)=>c-a)
+const v=n+K+B3(b[j],n)[0]
+X[v]||(X[v]=1,Q.push(n),y.push(b[j]),N.push(e*4+k),n==G+''&&(F=Q.length-1))}}
+if(!F)return''
+let e=F,s=''
+for(;e>0;){const n=N[e],k=n&3,g=n>>2
+B3(y[g],Q[g])
+s=K[k]+s
+for(let x=y[e]-E[k];x-y[g];x-=E[H[x]])s=K[H[x]]+s
+e=g}pl=y[F]
+return s}
+for(let i=t.length;i--;){const c=t[i],k=(i>8*w)*2+(i%w>6),b=c>'#'&&c<'+';A[i]=c=='#'|b;c>'%'&&c<'@'&&(G[k]??=[]).push(i);b&&(B[k]??=[]).push(i)}
+for(const k in B){B[k].forEach(x=>A[x]=0)
+M+=V(G[k],B[k])
+G[k].forEach(x=>A[x]=1)}f.mkdirSync(O+'/'+d,{recursive:!0});f.writeFileSync(O+'/'+d+'/solution.txt',M)}
